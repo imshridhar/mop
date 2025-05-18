@@ -1,0 +1,90 @@
+{
+  "app": {
+    "name": "Manufacturing Operations Platform",
+    "motto": "Digitize Your Manufacturing, Effortlessly"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "workOrders": "Work Orders",
+    "inventory": "Inventory",
+    "analytics": "Analytics",
+    "settings": "Settings"
+  },
+  "auth": {
+    "login": "Sign in",
+    "logout": "Sign out",
+    "email": "Email address",
+    "password": "Password",
+    "rememberMe": "Remember me",
+    "forgotPassword": "Forgot your password?",
+    "demoAccounts": "Demo Accounts",
+    "factoryOwner": "Factory Owner",
+    "supervisor": "Supervisor",
+    "worker": "Worker",
+    "client": "Client"
+  },
+  "dashboard": {
+    "productionDashboard": "Production Dashboard",
+    "currentProduction": "Current Production",
+    "recentAlerts": "Recent Alerts",
+    "workOrders": "Work Orders",
+    "inventoryStatus": "Inventory Status",
+    "productionHours": "Production Hours"
+  },
+  "worker": {
+    "dashboard": "Worker Dashboard",
+    "currentTask": "Current Task",
+    "upcomingTasks": "Upcoming Tasks",
+    "reportIssue": "Report Issue",
+    "markComplete": "Mark Complete",
+    "startTime": "Start Time",
+    "estimatedCompletion": "Estimated Completion"
+  },
+  "client": {
+    "dashboard": "Client Dashboard",
+    "activeOrders": "Active Orders",
+    "orderHistory": "Order History",
+    "newOrderRequest": "New Order Request",
+    "completedOrders": "Completed Orders",
+    "inProgress": "In Progress",
+    "pendingApproval": "Pending Approval"
+  },
+  "metrics": {
+    "oee": "OEE",
+    "efficiency": "Efficiency",
+    "downtime": "Downtime",
+    "quality": "Quality",
+    "target": "Target",
+    "current": "Current",
+    "timeRemaining": "Time Remaining"
+  },
+  "inventory": {
+    "lowStock": "Low Stock Items",
+    "outOfStock": "Out of Stock",
+    "totalItems": "Total Items",
+    "category": "Category",
+    "location": "Location",
+    "quantity": "Quantity"
+  },
+  "workOrders": {
+    "status": {
+      "inProgress": "In Progress",
+      "completed": "Completed",
+      "pending": "Pending",
+      "onHold": "On Hold"
+    },
+    "priority": {
+      "high": "High",
+      "medium": "Medium",
+      "low": "Low"
+    }
+  },
+  "common": {
+    "actions": "Actions",
+    "search": "Search",
+    "filter": "Filter",
+    "export": "Export",
+    "viewAll": "View All",
+    "viewDetails": "View Details"
+  }
+}

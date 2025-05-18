@@ -1,0 +1,90 @@
+{
+  "app": {
+    "name": "विनिर्माण संचालन मंच",
+    "motto": "अपने विनिर्माण को सरलता से डिजिटल बनाएं"
+  },
+  "nav": {
+    "dashboard": "डैशबोर्ड",
+    "workOrders": "कार्य आदेश",
+    "inventory": "इन्वेंटरी",
+    "analytics": "विश्लेषण",
+    "settings": "सेटिंग्स"
+  },
+  "auth": {
+    "login": "साइन इन करें",
+    "logout": "साइन आउट",
+    "email": "ईमेल पता",
+    "password": "पासवर्ड",
+    "rememberMe": "मुझे याद रखें",
+    "forgotPassword": "पासवर्ड भूल गए?",
+    "demoAccounts": "डेमो खाते",
+    "factoryOwner": "फैक्टरी मालिक",
+    "supervisor": "पर्यवेक्षक",
+    "worker": "कर्मचारी",
+    "client": "ग्राहक"
+  },
+  "dashboard": {
+    "productionDashboard": "उत्पादन डैशबोर्ड",
+    "currentProduction": "वर्तमान उत्पादन",
+    "recentAlerts": "हाल की चेतावनियां",
+    "workOrders": "कार्य आदेश",
+    "inventoryStatus": "इन्वेंटरी स्थिति",
+    "productionHours": "उत्पादन घंटे"
+  },
+  "worker": {
+    "dashboard": "कर्मचारी डैशबोर्ड",
+    "currentTask": "वर्तमान कार्य",
+    "upcomingTasks": "आगामी कार्य",
+    "reportIssue": "समस्या रिपोर्ट करें",
+    "markComplete": "पूर्ण चिह्नित करें",
+    "startTime": "प्रारंभ समय",
+    "estimatedCompletion": "अनुमानित समाप्ति"
+  },
+  "client": {
+    "dashboard": "ग्राहक डैशबोर्ड",
+    "activeOrders": "सक्रिय आदेश",
+    "orderHistory": "आदेश इतिहास",
+    "newOrderRequest": "नया आदेश अनुरोध",
+    "completedOrders": "पूर्ण आदेश",
+    "inProgress": "प्रगति में",
+    "pendingApproval": "स्वीकृति लंबित"
+  },
+  "metrics": {
+    "oee": "ओईई",
+    "efficiency": "दक्षता",
+    "downtime": "डाउनटाइम",
+    "quality": "गुणवत्ता",
+    "target": "लक्ष्य",
+    "current": "वर्तमान",
+    "timeRemaining": "शेष समय"
+  },
+  "inventory": {
+    "lowStock": "कम स्टॉक आइटम",
+    "outOfStock": "स्टॉक ख़त्म",
+    "totalItems": "कुल आइटम",
+    "category": "श्रेणी",
+    "location": "स्थान",
+    "quantity": "मात्रा"
+  },
+  "workOrders": {
+    "status": {
+      "inProgress": "प्रगति में",
+      "completed": "पूर्ण",
+      "pending": "लंबित",
+      "onHold": "होल्ड पर"
+    },
+    "priority": {
+      "high": "उच्च",
+      "medium": "मध्यम",
+      "low": "निम्न"
+    }
+  },
+  "common": {
+    "actions": "कार्रवाई",
+    "search": "खोज",
+    "filter": "फ़िल्टर",
+    "export": "निर्यात",
+    "viewAll": "सभी देखें",
+    "viewDetails": "विवरण देखें"
+  }
+}
