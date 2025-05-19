@@ -1,0 +1,950 @@
+Okay, this is an excellent, comprehensive specification! Let's structure this into Frontend, Backend, and Database sections to guide the development of your MOP application, integrating the commenting feature throughout.
+
+MOP: Manufacturing Operations Platform
+Motto: "Digitize Your Manufacturing, Effortlessly."
+Core Vision: To provide small-scale Indian manufacturing units with an affordable, intuitive, and powerful digital tool to streamline operations, enhance visibility, and drive efficiency across multiple factories and owners.
+
+I. Overall Architecture & Design Philosophy
+
+Modern Design: Clean, intuitive, visually appealing. Modern design and colorful and dynamic.
+
+Dashboard Status: Green (Good), Yellow (Warning), Red (Alert/Stopped), Blue (Idle).
+
+Real-time: WebSockets (Socket.IO) for instant updates.
+
+Modularity: Independent yet interconnected components/modules.
+
+Responsiveness: Desktop/tablet and mobile-friendly primary for dashboards; for Supervisor/Worker/Client different dashboard or interfaces.
+
+II. Frontend Development (React.js)
+
+A. Public Facing Pages (Not requiring login)
+
+Landing Page (/)
+
+Navigation Bar: Logo (MOP), Home, About MOP, Features, Login, Register (Dropdown: "Register as Factory Owner", "Register as Client").
+
+Hero Section: Headline ("Transform Your Manufacturing..."), Sub-headline, CTAs ("Register Your Factory", "Track Your Order", "Learn More"). Visual: Dynamic graphic/short video.
+
+About MOP Section: Problem, solution, target audience.
+
+Key Features Highlight Section: Icons and short descriptions (Live Dashboard, Work Orders, Inventory, etc.).
+
+"Why MOP?" Section: Benefits, "Designed for India" (mentioning local language support).
+
+Footer: Copyright, Privacy Policy, Terms of Service, Contact Us.
+
+Registration Pages
+
+Factory Owner Registration (/register/owner):
+
+Form: Owner Name, Email, Password, Phone Number.
+
+On submit (or next step): Factory Name, Factory Location (City, State, Address), Primary Industry.
+
+Client Registration (/register/client):
+
+Form: Name, Company Name (optional), Email, Password, Phone Number.
+
+Login Page (/login)
+
+Form: Email/User ID, Password. "Forgot Password?" link.
+
+Option to select user type if ID isn't unique across types (though email is better for Owner/Client).
+
+B. Authenticated Application Interface (Core App)
+
+General UI/UX Principles for Authenticated App:
+
+Main Layout: Persistent sidebar/top-bar for navigation (role-dependent), main content area.
+
+Responsiveness: Ensure key actions are accessible on tablets/mobiles for Supervisors.
+
+Notifications Area: Icon indicating new notifications (e.g., new comments, critical alerts).
+
+User Profile/Settings: Access to change password, language preference.
+
+Contextual Help/Tooltips: For complex features or icons.
+
+Commenting Feature UI (General Implementation):
+
+Visual Cue: Small "speech bubble" icon or "Comments (X)" link next to commentable entities (e.g., Production Line name, Work Order ID, KPI widget, Alert item, Raw Material item, Downtime Log entry).
+
+Interaction: Clicking the cue opens a modal or a side panel.
+
+Display within Modal/Panel:
+
+List/thread of comments.
+
+Each comment shows: Commenter's Name, Role (Owner/Supervisor), Timestamp, Comment text.
+
+Input field at the bottom/top to "Add a new comment."
+
+Own comments: Display "Edit" / "Delete" icons/links (possibly visible only for a short period after posting for edits).
+
+Role-Specific Dashboards & Interfaces:
+
+Factory Owner Interface:
+
+Default View: Multi-factory overview if applicable, otherwise single factory dashboard.
+
+Navigation: Access to all modules for their factory(ies).
+
+User Management (Supervisors): UI to create/list/edit Supervisor accounts (assign to factory).
+
+Factory Management: UI to add/edit factory details.
+
+Invoice Generation: UI to view completed/dispatched orders and trigger invoice generation.
+
+Supervisor Interface:
+
+Default View: Live Production Dashboard for their assigned factory.
+
+Navigation: Access to operational modules (Production Dashboard, Work Orders, Inventory, Machine/Labor).
+
+User Management (Workers): UI to create/list/edit Worker accounts.
+
+Voice Input Interface: A microphone icon that, when clicked, listens for commands. Feedback like "Listening..." and "Processing..."
+
+Worker Interface (Simple & Task-Focused):
+
+Default View: List of currently assigned tasks (Order ID, Product, Quantity, Target).
+
+Task Interaction: Buttons/actions to mark tasks "Started," "Paused," "Completed."
+
+View Instructions: Link/button to view associated documents/notes for a task.
+
+Client Interface:
+
+Default View: List of their orders (Order ID, Product, Factory Name, Status, Est. Completion).
+
+Order Details View: Click an order to see status history.
+
+Download Invoices: Link to download generated invoices.
+
+Admin (MOP Platform Admin) Interface:
+
+Dashboard: List of registered factories, owners. System health.
+
+User Management: View/manage factory owner accounts.
+
+Module-Specific Frontend Components:
+
+1. Live Production Dashboard (Owner, Supervisor):
+
+Factory Selector: Dropdown (for Owners with multiple factories, Admin).
+
+Layout Options (Toggle):
+
+Kanban View: Columns for stages. Draggable cards for Work Orders (showing Order ID, Product, Qty, % Complete).
+
+List View: Table with sortable columns (Line Name, WO ID, Product, Stage, Status %, Workers, Output, Target, Deviations).
+
+Status Indicators: Color-coded elements for Line Status, visual progress bars for WO Progress.
+
+Shift Performance Metrics: Charts/KPI cards for Total Output vs. Target, OEE (if implemented), Current Downtime Incidents.
+
+Worker Allocation Summary: Display active vs. planned workers, workers per line.
+
+Urgent Alerts Display: Prominent, dismissible alert section.
+
+Interactions: Filters (Date, Shift, Line). Clickable lines/WOs for drill-down. Quick status update buttons (Supervisor).
+
+Real-time Updates: Data refreshes dynamically.
+
+Commenting Integration:
+
+Speech bubble icon next to each Production Line name.
+
+Speech bubble icon on KPI widgets (e.g., next to "Overall Output").
+
+Speech bubble icon on items in the "Urgent Alerts Display."
+
+2. Smart Work Order System (Owner, Supervisor):
+
+Work Order List View: Table of WOs, filterable (status, date, client, product, line), searchable. Columns: WO ID, Product, Qty, Client, Dates, Priority, Line, Supervisor, Status, Progress Bar.
+
+Work Order Detail View:
+
+Display all WO details (ID, Product, Qty, Client, Dates, Priority, Line, Supervisor).
+
+Visual progress bar, current status.
+
+Status history log (timestamped changes, user).
+
+Resource Allocation section: Required materials (with availability status from inventory), assigned workers, required machines.
+
+Documentation section: List of attachments, ability to view/download.
+
+(Optional) Costing: Estimated vs. Actual.
+
+Create/Edit Work Order Form: Modal or separate page with fields for all WO details.
+
+Interactions: Buttons for "Create New WO," "Edit WO." Supervisor actions: "Assign to Line/Workers," "Update Status," "Log Material Consumption," "Record Output," "Log Scrap," "Upload/Manage Attachments."
+
+Smart Features Visuals: Flags/indicators for bottlenecks.
+
+Commenting Integration:
+
+Speech bubble icon on the main Work Order detail view (or next to WO ID in list view).
+
+(Advanced) Speech bubble icons for specific major stages/tasks within a WO if detailed.
+
+3. Inventory Tracker (Owner, Supervisor):
+
+Main Sections (Tabs or separate views): Raw Materials, Finished Goods, Scrap/Waste.
+
+A. Raw Materials View:
+
+Table: Material Name, SKU, Category, Supplier, UoM, Stock Qty, Reorder Level, Min. Stock, Price, Cost, Location. QR code display/generation.
+
+Interactions: "Add New Material" button, "Log Stock In" (GRN form), "Log Stock Consumption" form, "Adjust Stock" form. Click material to view transaction history.
+
+QR Scanning: Button to activate camera for scanning material QR codes for identification in forms.
+
+Commenting Integration: Speech bubble icon next to each raw material item in the list/detail view.
+
+B. Finished Goods View:
+
+Table: Product Name, SKU, Stock Qty, Origin WO ID, Completion Date, Dispatch Status, Location.
+
+Interactions: "Log Dispatch" form (select items, client, etc.). Click item for history.
+
+QR Scanning: Button to activate camera for scanning FG package QR codes during dispatch.
+
+Commenting Integration: Speech bubble icon next to each finished goods batch/item.
+
+C. Scrap/Waste Logging View:
+
+Table: Date, WO ID, Material/Product, Qty, Reason, Logged By.
+
+Interactions: "Log New Scrap Entry" form.
+
+Commenting Integration: Speech bubble icon next to each scrap entry.
+
+Alerts Display: Section showing low/critical stock alerts.
+
+4. Machine & Labor Utilization (Owner, Supervisor):
+
+A. Machine Utilization View:
+
+Machine List/Grid: Machine ID/Name, Type, Location, Line, Current Status (color-coded), Current WO.
+
+Machine Detail View (on click): Uptime %, Downtime %, OEE components. Downtime Log table (Start, End, Duration, Root Cause, Notes).
+
+Interactions: "Log Machine Downtime" form (select machine - QR scan option, root cause dropdown, notes), "Update Machine Status" button.
+
+QR Scanning: Button to activate camera for scanning machine QR codes for quick selection.
+
+Commenting Integration:
+
+Speech bubble icon next to each Machine Downtime Log entry.
+
+Speech bubble icon next to each machine in its master record/detail view.
+
+B. Labor Utilization View:
+
+Worker Roster/Table: Worker ID, Name, Role, Shift, Current Task/WO/Line, Attendance Status (if integrated).
+
+Productivity Display: Cards/charts for tasks completed, actual vs. standard time, output per worker, idle time.
+
+Interactions (Supervisor): UI to assign workers to Lines/WOs/Tasks. Log exceptions.
+
+Commenting Integration (Use with care):
+
+Speech bubble icon for a worker's activity summary for a shift/day (e.g., in a shift report).
+
+Speech bubble icon on a Shift Summary report/widget.
+
+Alerts Display: Section for machine idle/down too long, worker unassigned.
+
+5. Insights & Analytics Panel (Owner, specific Supervisor permissions):
+
+Dashboard Layout: KPI cards, charts (line, bar, pie).
+
+Visual KPIs Display: On-Time Delivery %, Wastage %, Output, Uptime/Downtime %, Labor Utilization %, First Pass Yield.
+
+Charts: Interactive charts with tooltips, zoom.
+
+Filters: Date Range Picker, Dropdowns for Factory, Line, Product.
+
+Download Reports: Buttons for "Download PDF," "Download Excel."
+
+Key Feature Frontend Aspects:
+
+Voice Input (Supervisor):
+
+Utilize Web Speech API (SpeechRecognition).
+
+UI feedback during listening and processing.
+
+QR-Code Scanning:
+
+Use a library like react-qr-reader or html5-qrcode-scanner.
+
+Integrate camera access UI within relevant forms (material entry, dispatch, machine selection).
+
+Multi-Factory Dashboard (Owner):
+
+Aggregated KPI display.
+
+Clear selectors/links to drill down to individual factory dashboards.
+
+Local Language UI Support:
+
+Use i18next with react-i18next(English , Hindi , Kannada , Marathi , Telugu , Tamil , Maliyalam , urdu).
+
+Language switcher in user profile/settings or main navigation.
+
+Store translation strings in JSON files (en.json, hi.json, kn.json, etc.).
+
+Frontend Tech Stack Summary:
+
+Core: React.js
+
+
+Routing: React Router.
+
+QR Scanning: react-qr-reader or html5-qrcode-scanner.
+
+Internationalization (i18n): i18next, react-i18next.
+
+Real-time: Socket.IO Client.
+
+Form Handling: Formik or React Hook Form.
+
+API Calls: Axios or Fetch API.
+
+III. Backend Development (Node.js, Express.js)
+
+A. API Design (RESTful Endpoints)
+
+Structure endpoints logically by resource (e.g., /api/v1/users, /api/v1/factories, /api/v1/work-orders, /api/v1/inventory/raw-materials, /api/v1/machines/:machineId/downtime, /api/v1/comments).
+
+Use standard HTTP methods (GET, POST, PUT, DELETE).
+
+Consistent request/response formats (JSON).
+
+Implement pagination, sorting, and filtering for list endpoints.
+
+B. Authentication & Authorization (RBAC)
+
+Authentication: JWT (JSON Web Tokens).
+
+/auth/register/owner, /auth/register/client, /auth/login endpoints.
+
+Token generation upon successful login/registration.
+
+Token validation middleware for protected routes.
+
+Authorization (RBAC):
+
+Middleware to check user role (Admin(create manualy id and password), Owner, Supervisor, Worker, Client) and permissions for accessing specific routes or performing actions.
+
+Permissions logic: e.g., Only Owner/Supervisor can create WOs. Only Owner can create Supervisor accounts.
+
+C. Real-time Communication (Socket.IO)
+
+Setup Socket.IO server.
+
+Emit events for:
+
+Live Production Dashboard updates (WO status changes, line status, output metrics).
+
+Inventory level changes (triggering frontend alert displays).
+
+Machine status changes.
+
+New critical alerts.
+
+New comment notifications (optional for Phase 2/3, targeted to involved users).
+
+Use rooms for targeting updates (e.g., factory_<factoryId>_dashboard, workorder_<woId>_comments).
+
+D. Module-Specific Backend Logic:
+
+User & Factory Management:
+
+CRUD operations for Users (all roles), Factories.
+
+Logic for linking Owners to Factories, Supervisors to Factories, Workers to Factories.
+
+Password hashing (bcrypt).
+
+Admin logic for factory data setup.
+
+Live Production Dashboard Logic:
+
+Aggregate data from Work Orders, Machines, Labor for the selected factory/lines/shift.
+
+Calculate KPIs like OEE (if implemented), output deviations.
+
+Process filter requests.
+
+Smart Work Order System Logic:
+
+CRUD for Work Orders.
+
+Generate unique WO IDs.
+
+Business logic for status transitions, history logging.
+
+Linkage to Product master (for BOM), Inventory (for material allocation), Machines, Workers.
+
+(Simple) Completion time estimation logic (standard time per unit * quantity). Future: factor in load.
+
+Bottleneck detection logic (e.g., if WO status is "Paused - Material Shortage").
+
+Inventory Tracker Logic:
+
+CRUD for Raw Materials master, Finished Goods.
+
+GRN processing: Update stock, log transaction.
+
+Consumption logic: Decrement stock against WO, log transaction.
+
+Dispatch logic: Decrement FG stock, log dispatch.
+
+Scrap logging: Record scrap entries.
+
+Reorder/Minimum stock level checks and alert generation.
+
+Machine & Labor Utilization Logic:
+
+CRUD for Machine master.
+
+Log machine downtime: record start/end, calculate duration, store root cause.
+
+Calculate uptime/OEE components.
+
+Worker shift assignment logic.
+
+(Basic) Productivity tracking: link worker activity to WO task completion.
+
+Alert generation for idle machines/workers, over-utilization.
+
+Insights & Analytics Panel Logic:
+
+Data aggregation and calculation for KPIs (On-Time Delivery, Wastage %, Output, Uptime, etc.).
+
+Data fetching based on filters.
+
+Report generation (PDF/Excel):
+
+Use libraries like pdfmake or puppeteer (for HTML to PDF) for PDFs.
+
+Use libraries like exceljs or xlsx for Excel.
+
+(Simple) Predictive trend lines: Linear regression on historical data.
+
+Commenting Feature Backend Logic:
+
+Endpoints:
+
+POST /api/v1/comments: Create a new comment. Requires entity_type (e.g., 'production_line', 'work_order', 'raw_material', 'downtime_log'), entity_id, and content.
+
+GET /api/v1/comments?entity_type=<type>&entity_id=<id>: Get all comments for a specific entity.
+
+PUT /api/v1/comments/:commentId: Edit own comment (check ownership and timeframe).
+
+DELETE /api/v1/comments/:commentId: Delete own comment (check ownership).
+
+Logic:
+
+Validate user role (Owner/Supervisor can comment).
+
+Store commenter's ID and role with the comment.
+
+Ensure comments are only visible to Owners/Supervisors associated with the same factory as the commented entity.
+
+(Optional for Phase 2/3) Notification logic: When a comment is added, identify relevant users (e.g., other supervisors/owner of the same factory, or users "watching" an item) and create a notification entry for them / emit a socket event.
+
+E. Key Feature Backend Implementation:
+
+Voice Input Processing:
+
+Endpoint to receive transcribed text from frontend.
+
+Natural Language Processing (NLP) - can start with simple keyword matching/regex, or use a lightweight NLP library if more complexity is needed.
+
+Examples: "start order {ID}" -> find WO, update status. "check stock {material name}" -> query inventory. "log downtime machine {ID} reason {reason}" -> create downtime entry.
+
+Execute corresponding actions based on parsed command.
+
+QR-Code Based Operations Logic:
+
+Endpoints to receive data identified by QR scans (e.g., material SKU, WO ID, machine ID).
+
+Process this data to pre-fill forms or directly log actions (e.g., POST /api/inventory/consume-via-qr with workOrderId and materialSku).
+
+QR Code Generation: Library like qrcode to generate QR codes for materials, machines, etc., to be stored/displayed.
+
+Multi-Factory Dashboard Logic:
+
+Data aggregation queries that can group by factory for Owners viewing multiple factories.
+
+Ensuring data is properly scoped by factory ID for all operations.
+
+Downtime Root-Cause Tracker:
+
+Manage a list of pre-defined and custom root causes.
+
+Link downtime logs to these causes.
+
+Analytics endpoints to get frequency of root causes.
+
+Invoice Generation & Email:
+
+Endpoint to trigger invoice generation for a Work Order (or batch).
+
+Fetch WO details, client details, product pricing.
+
+Use a PDF generation library (pdfmake or similar) with a template.
+
+Use an email service/library (Nodemailer with SMTP or transactional email service like SendGrid/Mailgun) to send the PDF invoice to the client's email.
+
+F. Backend Tech Stack Summary:
+
+Core: Node.js, Express.js
+
+API: RESTful.
+
+Authentication: JWT.
+
+ORM/Query Builder: Sequelize or TypeORM (for PostgreSQL(also create code for run on local system )).
+
+Real-time: Socket.IO.
+
+PDF Generation: pdfmake, puppeteer.
+
+Excel Generation: exceljs, node-xlsx.
+
+Email: Nodemailer.
+
+QR Code Generation: qrcode.
+
+Password Hashing: bcryptjs.
+
+Validation: Joi or express-validator.
+
+IV. Database Design (PostgreSQL (also create code for run on local system ))
+
+A. Core Entities & Tables (Illustrative - normalize as needed):
+
+Users
+
+user_id (PK, UUID or SERIAL)
+
+name (VARCHAR)
+
+email (VARCHAR, UNIQUE, for Owner/Client login)
+
+username (VARCHAR, UNIQUE, optional, for Supervisor/Worker login if email not used)
+
+password_hash (VARCHAR)
+
+phone_number (VARCHAR)
+
+role (ENUM: 'ADMIN', 'OWNER', 'SUPERVISOR', 'WORKER', 'CLIENT')
+
+language_preference (VARCHAR, default 'en')
+
+created_at, updated_at
+
+Factories
+
+factory_id (PK, UUID or SERIAL)
+
+owner_user_id (FK to Users.user_id)
+
+factory_name (VARCHAR)
+
+location_address (VARCHAR)
+
+location_city (VARCHAR)
+
+location_state (VARCHAR)
+
+primary_industry (VARCHAR)
+
+created_at, updated_at
+
+(Consider a Factory_Owners junction table if one owner can have multiple factories and one factory potentially multiple owners, though simpler is one owner per factory initial record)
+
+Supervisors_Factories (Junction Table for assignment)
+
+supervisor_user_id (FK to Users.user_id where role='SUPERVISOR')
+
+factory_id (FK to Factories.factory_id)
+
+PRIMARY KEY (supervisor_user_id, factory_id)
+
+Workers_Factories (Junction Table for assignment, or direct FK on Worker if 1 worker = 1 factory)
+
+worker_user_id (FK to Users.user_id where role='WORKER')
+
+factory_id (FK to Factories.factory_id)
+
+assigned_supervisor_id (FK to Users.user_id, optional)
+
+PRIMARY KEY (worker_user_id, factory_id)
+
+Products (Product Master)
+
+product_id (PK, UUID or SERIAL)
+
+factory_id (FK to Factories.factory_id)
+
+product_name (VARCHAR)
+
+product_code (SKU, VARCHAR, UNIQUE within factory)
+
+standard_time_per_unit (DECIMAL, for estimations)
+
+bom_details (JSONB, or separate BOM tables)
+
+created_at, updated_at
+
+WorkOrders
+
+work_order_id (PK, UUID or SERIAL)
+
+factory_id (FK to Factories.factory_id)
+
+product_id (FK to Products.product_id)
+
+quantity_required (INTEGER)
+
+client_user_id (FK to Users.user_id where role='CLIENT', nullable)
+
+creation_date (TIMESTAMPZ)
+
+due_date (TIMESTAMPZ)
+
+estimated_completion_date (TIMESTAMPZ)
+
+actual_completion_date (TIMESTAMPZ, nullable)
+
+priority (ENUM: 'LOW', 'MEDIUM', 'HIGH', 'URGENT')
+
+assigned_production_line_id (FK to ProductionLines.line_id, nullable)
+
+assigned_supervisor_id (FK to Users.user_id where role='SUPERVISOR')
+
+current_status (ENUM: 'NEW', 'PLANNED', 'IN_PROGRESS', 'PAUSED', 'QUALITY_CHECK', 'REWORK', 'DONE', 'DISPATCHED')
+
+progress_percentage (INTEGER, 0-100)
+
+cost_estimated (DECIMAL, nullable)
+
+cost_actual (DECIMAL, nullable)
+
+notes (TEXT)
+
+created_at, updated_at
+
+WorkOrderStatusHistory
+
+history_id (PK, UUID or SERIAL)
+
+work_order_id (FK to WorkOrders.work_order_id)
+
+status (VARCHAR)
+
+changed_by_user_id (FK to Users.user_id)
+
+timestamp (TIMESTAMPZ)
+
+notes (TEXT, optional)
+
+WorkOrderAttachments
+
+attachment_id (PK, UUID or SERIAL)
+
+work_order_id (FK to WorkOrders.work_order_id)
+
+file_name (VARCHAR)
+
+file_path_or_url (VARCHAR)
+
+uploaded_by_user_id (FK to Users.user_id)
+
+uploaded_at (TIMESTAMPZ)
+
+RawMaterials
+
+material_id (PK, UUID or SERIAL)
+
+factory_id (FK to Factories.factory_id)
+
+material_name (VARCHAR)
+
+sku_code (VARCHAR, UNIQUE within factory)
+
+category (VARCHAR)
+
+supplier_info (TEXT, or FK to a Suppliers table)
+
+unit_of_measure (VARCHAR)
+
+current_stock_quantity (DECIMAL)
+
+reorder_level (DECIMAL)
+
+minimum_stock_level (DECIMAL)
+
+last_purchase_price (DECIMAL)
+
+average_cost (DECIMAL)
+
+storage_location (VARCHAR)
+
+qr_code_data (TEXT, unique)
+
+created_at, updated_at
+
+InventoryTransactions (for Raw Materials)
+
+transaction_id (PK, UUID or SERIAL)
+
+material_id (FK to RawMaterials.material_id)
+
+transaction_type (ENUM: 'STOCK_IN', 'CONSUMPTION', 'ADJUSTMENT')
+
+quantity (DECIMAL, positive for IN, negative for CONSUMPTION)
+
+work_order_id (FK to WorkOrders.work_order_id, nullable for non-consumption)
+
+user_id (FK to Users.user_id)
+
+transaction_date (TIMESTAMPZ)
+
+notes (TEXT, e.g., GRN number, reason for adjustment)
+
+FinishedGoods
+
+fg_id (PK, UUID or SERIAL)
+
+factory_id (FK to Factories.factory_id)
+
+product_id (FK to Products.product_id)
+
+origin_work_order_id (FK to WorkOrders.work_order_id)
+
+quantity (INTEGER)
+
+completion_date (TIMESTAMPZ)
+
+dispatch_status (ENUM: 'READY_FOR_DISPATCH', 'DISPATCHED')
+
+dispatched_to_client_id (FK to Users.user_id, nullable)
+
+dispatch_date (TIMESTAMPZ, nullable)
+
+storage_location (VARCHAR)
+
+qr_code_data_package (TEXT, unique, nullable)
+
+created_at, updated_at
+
+ScrapLogs
+
+scrap_log_id (PK, UUID or SERIAL)
+
+factory_id (FK to Factories.factory_id)
+
+work_order_id (FK to WorkOrders.work_order_id, nullable)
+
+material_id (FK to RawMaterials.material_id, nullable)
+
+product_id (FK to Products.product_id, nullable)
+
+quantity_scrapped (DECIMAL)
+
+reason_for_scrap (TEXT)
+
+logged_by_user_id (FK to Users.user_id)
+
+log_date (TIMESTAMPZ)
+
+ProductionLines
+
+line_id (PK, UUID or SERIAL)
+
+factory_id (FK to Factories.factory_id)
+
+line_name (VARCHAR)
+
+current_status (ENUM: 'RUNNING', 'IDLE', 'DOWN', 'MAINTENANCE')
+
+created_at, updated_at
+
+Machines
+
+machine_id (PK, UUID or SERIAL)
+
+factory_id (FK to Factories.factory_id)
+
+production_line_id (FK to ProductionLines.line_id, nullable)
+
+machine_name (VARCHAR)
+
+machine_type (VARCHAR)
+
+location (VARCHAR)
+
+standard_operating_speed (DECIMAL)
+
+maintenance_schedule_info (TEXT)
+
+qr_code_data (TEXT, unique)
+
+current_status (ENUM: 'RUNNING', 'IDLE', 'DOWN', 'UNDER_MAINTENANCE')
+
+created_at, updated_at
+
+MachineDowntimeLogs
+
+downtime_log_id (PK, UUID or SERIAL)
+
+machine_id (FK to Machines.machine_id)
+
+start_time (TIMESTAMPZ)
+
+end_time (TIMESTAMPZ, nullable if ongoing)
+
+duration_minutes (INTEGER, calculated)
+
+root_cause_id (FK to DowntimeRootCauses.cause_id)
+
+notes (TEXT)
+
+logged_by_user_id (FK to Users.user_id)
+
+DowntimeRootCauses (Master table)
+
+cause_id (PK, UUID or SERIAL)
+
+factory_id (FK to Factories.factory_id, if causes are factory-specific, or NULL for global)
+
+cause_description (VARCHAR, UNIQUE within factory or globally)
+
+is_predefined (BOOLEAN, default FALSE)
+
+Shifts (Master table for shift patterns)
+
+shift_id (PK, UUID or SERIAL)
+
+factory_id (FK to Factories.factory_id)
+
+shift_name (VARCHAR)
+
+start_time_definition (TIME)
+
+end_time_definition (TIME)
+
+WorkerAssignments (or WorkerActivityLog)
+
+assignment_id (PK, UUID or SERIAL)
+
+worker_user_id (FK to Users.user_id)
+
+shift_id (FK to Shifts.shift_id, nullable)
+
+work_order_id (FK to WorkOrders.work_order_id, nullable)
+
+production_line_id (FK to ProductionLines.line_id, nullable)
+
+task_description (TEXT)
+
+assignment_start_time (TIMESTAMPZ)
+
+assignment_end_time (TIMESTAMPZ, nullable)
+
+status (ENUM: 'ASSIGNED', 'IN_PROGRESS', 'COMPLETED', 'PAUSED')
+
+Alerts
+
+alert_id (PK, UUID or SERIAL)
+
+factory_id (FK to Factories.factory_id)
+
+alert_type (VARCHAR, e.g., 'LOW_STOCK', 'MACHINE_DOWN', 'WORKER_IDLE')
+
+related_entity_type (VARCHAR, e.g., 'RawMaterial', 'Machine')
+
+related_entity_id (UUID or INTEGER)
+
+message (TEXT)
+
+severity (ENUM: 'INFO', 'WARNING', 'CRITICAL')
+
+is_acknowledged (BOOLEAN, default FALSE)
+
+acknowledged_by_user_id (FK to Users.user_id, nullable)
+
+acknowledged_at (TIMESTAMPZ, nullable)
+
+created_at (TIMESTAMPZ)
+
+Comments
+
+comment_id (PK, UUID or SERIAL)
+
+factory_id (FK to Factories.factory_id, for scoping visibility)
+
+user_id (FK to Users.user_id - commenter)
+
+commenter_role_at_time_of_comment (VARCHAR, e.g., 'OWNER', 'SUPERVISOR' - to preserve role context)
+
+parent_entity_type (VARCHAR - e.g., 'PRODUCTION_LINE', 'WORK_ORDER', 'RAW_MATERIAL', 'MACHINE_DOWNTIME_LOG', 'SCRAP_LOG', 'KPI_WIDGET', 'ALERT')
+
+parent_entity_id (UUID or INTEGER - ID of the item being commented on)
+
+content (TEXT)
+
+created_at (TIMESTAMPZ, default NOW())
+
+updated_at (TIMESTAMPZ, default NOW())
+
+is_edited (BOOLEAN, default FALSE)
+
+Indexes on (parent_entity_type, parent_entity_id), user_id, factory_id.
+
+Invoices
+
+invoice_id (PK, UUID or SERIAL)
+
+work_order_id (FK to WorkOrders.work_order_id)
+
+client_user_id (FK to Users.user_id)
+
+factory_id (FK to Factories.factory_id)
+
+invoice_number (VARCHAR, UNIQUE)
+
+invoice_date (DATE)
+
+due_date (DATE)
+
+total_amount (DECIMAL)
+
+tax_amount (DECIMAL)
+
+status (ENUM: 'DRAFT', 'SENT', 'PAID', 'OVERDUE')
+
+pdf_file_path (VARCHAR, nullable)
+
+created_at, updated_at
+
+B. Data Integrity & Performance:
+
+Use Foreign Keys extensively to maintain relational integrity.
+
+Implement appropriate Indexes on frequently queried columns (FKs, date ranges, status fields, entity_type and entity_id in Comments).
+
+Use transactions for operations that involve multiple table updates (e.g., Work Order creation, Inventory consumption).
+
+Consider partitioning for very large tables if performance becomes an issue over time (e.g., InventoryTransactions, MachineDowntimeLogs).
+
+This detailed breakdown should serve as a strong foundation for building MOP. Remember to iterate, especially on the UI/UX, based on feedback and usability testing. Good luck!
